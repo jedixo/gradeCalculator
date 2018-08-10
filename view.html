@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Assessment calc</title>
+    <SCRIPT language="javascript">
+        //data
+        var i = 0;
+        var data = [];
+        var outputs = [];
+        var gradeData = [];
+
+        function init() {
+
+            gradeData.push(document.getElementById("p"));
+            gradeData.push(document.getElementById("c"));
+            gradeData.push(document.getElementById("d"));
+            gradeData.push(document.getElementById("hd"));
+
+            var foo = document.getElementById("avg");
+            var tr = document.createElement("tr");
+            var worth = document.createElement("td");
+            worth.setAttribute("name", "worth");
+            worth.setAttribute("id", "worth");
+            worth.innerHTML = "0";
+            var wrt = [];
+            wrt.push(worth);
+            wrt.push(0);
+            outputs.push(wrt);
+            tr.appendChild(worth);
+
+            var rec = document.createElement("td");
+            rec.setAttribute("name", "rec");
+            rec.setAttribute("id", "rec");
+            rec.innerHTML = "0";
+            var rc = [];
+            rc.push(rec);
+            rc.push(0);
+            outputs.push(rc);
+            tr.appendChild(rec);
+
+            var ear = document.createElement("td");
+            ear.setAttribute("name", "ear");
+            ear.setAttribute("id", "ear");
+            ear.innerHTML = "0";
+            var ea = [];
+            ea.push(ear);
+            ea.push(0);
+            outputs.push(ea);
+            tr.appendChild(ear);
+
+            foo.appendChild(tr); 
+
+            foo = document.getElementById("final");
+            tr = document.createElement("tr");
+            worth = document.createElement("td");
+            worth.setAttribute("name", "worth");
+            worth.setAttribute("id", "worth");
+            worth.innerHTML = "100";
+            var fn = [];
+            fn.push(worth);
+            fn.push(100);
+            outputs.push(fn);
+            tr.appendChild(worth);
+            foo.appendChild(tr); 
+        }
+
+        // function to add new rows to table
+        function addNew() {
+            var io = [];
+            var tr = document.createElement("tr");
+            tr.setAttribute("name", "A" + i);
+            tr.setAttribute("id", "A" + i);
+
+            var tdname = document.createElement("td");
+            tdname.setAttribute("name", "name" + i);
+            tdname.setAttribute("id", "name" + i);
+            var inpname = document.createElement("input");
+            inpname.setAttribute("type", "text");
+            inpname.setAttribute("name", "nameInput" + i);
+            inpname.setAttribute("id", "nameInput" + i);
+            tdname.appendChild(inpname);
+            tr.appendChild(tdname);
+
+            var tdworth = document.createElement("td");
+            tdworth.setAttribute("name", "worth" + i);
+            tdworth.setAttribute("id", "worth" + i);
+            var ipworth = document.createElement("input");
+            ipworth.setAttribute("type", "number");
+            ipworth.setAttribute("name", "worthInput" + i);
+            ipworth.setAttribute("id", "worthInput" + i);
+            ipworth.setAttribute("value", "0");
+            io.push(ipworth);
+            tdworth.appendChild(ipworth);
+            tr.appendChild(tdworth);
+            ipworth.addEventListener('input', function() {
+               updateEarned();
+            });
+
+            var tdrec = document.createElement("td");
+            tdrec.setAttribute("name", "rec" + i);
+            tdrec.setAttribute("id", "rec" + i);
+            var iprec = document.createElement("input");
+            iprec.setAttribute("type", "number");
+            iprec.setAttribute("name", "recInput" + i);
+            iprec.setAttribute("id", "recInput" + i);
+            iprec.setAttribute("value", "0");
+            io.push(iprec);
+            tdrec.appendChild(iprec);
+            tr.appendChild(tdrec);
+            iprec.addEventListener('input', function() {
+               updateEarned();
+            });
+
+            var tdear = document.createElement("td");
+            tdear.setAttribute("name", "ear" + i);
+            tdear.setAttribute("id", "ear" + i);
+            tdear.innerHTML = "0";
+            io.push(tdear);
+            tr.appendChild(tdear);
+
+            var foo = document.getElementById("tempStat");
+            foo.appendChild(tr);
+            io.push(0);
+            data.push(io);
+            i++;
+        }
+
+        function updateEarned() {
+                var count = 0;
+                var totalWorth = 0;
+                var rreceived = 0;
+                var totalEarned = 0;
+                var avgReceived = 0;
+                var finalWeight = 1;
+
+            for (x = 0; x < data.length; x++) {
+                var worth = data[x][0].value / 100;
+                var received = data[x][1].value / 100;
+                var earned = worth * received;
+                data[x][2].innerHTML = earned * 100;
+                data[x][3] = earned;
+
+                totalWorth += worth;
+                finalWeight -= worth;
+                rreceived += received;
+                totalEarned += earned;
+                count++;
+            }
+
+            avgReceived = rreceived / count;
+            outputs[0][0].innerHTML = totalWorth * 100;
+            outputs[0][1] = totalWorth * 100;
+            outputs[1][0].innerHTML = avgReceived * 100;
+            outputs[1][1] = avgReceived * 100;
+            outputs[2][0].innerHTML = totalEarned * 100;
+            outputs[2][1] = totalEarned * 100;
+            outputs[3][0].innerHTML = finalWeight * 100;
+            outputs[3][1] = finalWeight * 100;
+            cacluate();
+        }
+
+        function cacluate() {
+            var mark = outputs[2][1];
+            var finwei =  outputs[3][1];
+            var p = 0;
+            var c = 0;
+            var d = 0;
+            var hd = 0;
+            var tmp = 0;
+            var tmp2 = 0;
+            while (tmp2 <= 85) {
+                while (tmp2 <= 75) {
+                    while (tmp2 <= 65) {
+                        while (tmp2 <= 50) {
+                           tmp++;
+                           var earned;
+                           earned = tmp * finwei / 100;
+                           tmp2 = mark + earned;
+                           p = tmp;
+                        }
+                        tmp++;
+                        var earned;
+                        earned = tmp * finwei / 100;
+                        tmp2 = mark + earned;
+                        c = tmp;
+                    }
+                    tmp++;
+                    var earned;
+                    earned = tmp * finwei / 100;
+                    tmp2 = mark + earned;
+                    d = tmp;
+                }
+                tmp++;
+                var earned;
+                earned = tmp * finwei / 100;
+                tmp2 = mark + earned;
+               hd = tmp;
+            }
+            gradeData[0].innerHTML = p + "%";
+            gradeData[1].innerHTML = c + "%";
+            gradeData[2].innerHTML = d + "%";
+            gradeData[3].innerHTML = hd + "%";
+        }
+</SCRIPT>
+
+</head>
+<h1>Grade Calculator by Jake Dixon</h1>
+
+<div class="StatisticData">
+    <table id="tempStat" border="1">
+        <caption>compleeted Assessments:</caption>
+        <tr>
+            <th>Assessment Name:</th>
+            <th>Weight (%):</th>
+            <th>Mark received (%):</th>
+            <th>Percentage earned:</th>
+        </tr>
+
+    </table>
+    <input type="button" name="addnew" id="addnew" value="Add new assessment piece" onclick="addNew()" /><br><br>
+    <table id="avg" border="1">
+        <tr>
+            <th>Total weight of assessment (%):</th>
+            <th>Avg mark received (%)</th>
+            <th>Overal standing mark (%):</th>
+
+        </tr>
+    </table>
+    <br>
+    <P> Final Exam Calculator (ignore if no final exam for subject):</P>
+    <table id="final" border="1">
+        <tr>
+            <th>Final Exam Weight (%):</th>
+        </tr>
+    </table> <br>
+    <table id="mark" border="1">
+        <tr>
+            <th>Mark needed for HD (%):</th>
+            <td id="hd">0%</td>
+        </tr>
+        <tr>
+            <th>Mark needed for D (%):</th>
+            <td id="d">0%</td>
+        </tr>
+        <tr>
+            <th>Mark needed for C (%):</th>
+            <td id="c">0%</td>
+        </tr>
+        <tr>
+            <th>Mark needed for P (%):</th>
+            <td id="p">0%</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+<script>init();addNew();</script>
+<p>Privacy Notice: All data and computation is done locally and is private. Nothing is sent to the server.
+
+</html>
