@@ -10,7 +10,64 @@
         crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="styles.css">
+  
+    <SCRIPT language="javascript">
+        var index = 0;
+        var gradeData = [];
+        var outputs = [];
+        var data = [];
+
+        //initialises data needed for calculations
+        function init() {
+            //grabs output elements
+            gradeData.push(document.getElementById("neededC"));
+            gradeData.push(document.getElementById("neededD"));
+            gradeData.push(document.getElementById("neededHD"));
+            gradeData.push(document.getElementById("totEarned"));
+            gradeData.push(document.getElementById("avgMark"));
+            //sets initital values for outputs
+            for (var i = 0; i < gradeData.length; i++) {
+                gradeData[i].innerHTML = "0";
+                outputs.push(0);
+            }
+            //final exam worth if needed
+            outputs.push(0);
+        };
+
+        //adds a new subject table
+        function addNew() {
+            var io = []
+
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "sub" + index);
+
+            var tdname = document.createElement("td");
+            tdname.setAttribute("id", "name" + index);
+            var inpdiv = document.createElement("div");
+            inpdiv.setAttribute("class", "input-group");
+            var inpname = document.createElement("input");
+            inpname.setAttribute("type", "text");
+            inpname.setAttribute("id", "nameInput" + index);
+            inpname.setAttribute("class", "form-control");
+            inpname.setAttribute("placeholder", "Assessment Name");
+            inpname.setAttribute("aria-describedby", "basic-adon1");
+            inpdiv.appendChild(inpname)
+            tdname.appendChild(inpdiv);
+            tr.appendChild(tdname);
+
+
+
+
+            var foo = document.getElementById("subjectTable");
+            foo.appendChild(tr);
+            io.push(0);
+            data.push(io);
+            index++;
+        }
+    
+  
+    
+    </SCRIPT>
 </head>
 
 <body>
@@ -58,7 +115,7 @@
                     <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Grade for individual assesment piece</td></tr></table>">Mark Received</th>
                     <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Percentage of overall subject grade</td></tr></table>">Overall Grade</th>
                     <th class="text-right" scope="col">
-                        <button type="button" class="btn btn-primary " data-toggle="tooltip" data-placement="bottom" title="add another row">&#x271A</button>
+                        <button type="button" class="btn btn-primary " data-toggle="tooltip" data-placement="bottom" title="add another row" onclick="addNew()">&#x271A</button>
                     </th>
                 </tr>
             </thead>
@@ -102,6 +159,7 @@
     </div>
     <button type="button" class="btn btn-primary btn-lg btn-block mx-auto" style="width: 95%">Calculate</button>
     <script>
+        init();addNew();
         $('th[data-toggle="tooltip"]').tooltip({ html: true });
         $('button[data-toggle="tooltip"]').tooltip({ html: true });</script>
 
