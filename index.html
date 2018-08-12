@@ -56,6 +56,31 @@
             tr.appendChild(tdname);
 
 
+            var tdworth = document.createElement("td");
+            tdworth.setAttribute("id", "worth" + index);
+            var inpdivworth = document.createElement("div");
+            inpdivworth.setAttribute("class", "input-group");
+            var inpdivworthprep = document.createElement("div");
+            inpdivworthprep.setAttribute("class", "input-group-prepend");
+            var inpdivworthprepspan = document.createElement("span");
+            inpdivworthprepspan.setAttribute("class", "input-group-text");
+            inpdivworthprepspan.innerHTML = "%";
+            inpdivworthprep.appendChild(inpdivworthprepspan);
+            inpdivworth.appendChild(inpdivworthprep);
+            var ipworth = document.createElement("input");
+            ipworth.setAttribute("type", "number");
+            ipworth.setAttribute("class", "form-control");
+            ipworth.setAttribute("aria-describedby", "basic-adon1");
+            ipworth.setAttribute("id", "worthInput" + index);
+            ipworth.setAttribute("placeholder", "100");
+            io.push(ipworth);
+            inpdivworth.appendChild(ipworth)
+            tdworth.appendChild(inpdivworth);
+            tr.appendChild(tdworth);
+            ipworth.addEventListener('input', function() {
+               updateEarned();
+            });
+
 
 
             var foo = document.getElementById("subjectTable");
