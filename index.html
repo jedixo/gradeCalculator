@@ -254,6 +254,17 @@
             gradeData[3].innerHTML = outputs[3] + "%";
             gradeData[4].innerHTML = outputs[4] + "%";
             gradeData[5].innerHTML = outputs[5] + "%";
+            
+            var pb=document.getElementById("progbar");
+            var suc = document.createElement("div");
+            suc.setAttribute("class","progress-bar progress-bar-striped");
+            suc.setAttribute("role","progressbar");
+            suc.setAttribute("style","width: " + outputs[3] +"%");
+            suc.setAttribute("aria-valuenow",""+ outputs[3]);
+            suc.setAttribute('aria-valuemin',"0");
+            suc.setAttribute("aria-valuemax","100");
+            pb.appendChild(suc);
+
         }
 
         function checkValid(element) {
@@ -302,8 +313,9 @@
             </tbody>
         </table>
     </div>
-    <div class="progress mx-auto" style="width: 95%; ">
-        <div class="progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    <div id="progbar" class="progress mx-auto" style="width: 95%; ">
+        
+       
     </div>
     <div style="padding-bottom: .8%"></div>
     <div class="table-responsive mx-auto" style="width: 95%;">
