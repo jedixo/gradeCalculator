@@ -135,12 +135,11 @@
             tddel.appendChild(tddelbut);
             tr.appendChild(tddel);
 
-            var foo = document.getElementById("subjectTable");
+            var foo = document.getElementById("subtabbdy");
             foo.appendChild(tr);
             io.push(0);
             io.push(index);
             data.push(io);
-            //data.push(index);
 
             if (data.length > 1) {
                 for (var i = 0; i < data.length; i++) {
@@ -161,14 +160,10 @@
                 }
             }
         }
-
-
-
     </SCRIPT>
 </head>
 
 <body>
-
     <h1 class="text-center" style="width: 100%;">Jake's Grade Calculator -
         <small class="text-muted">Version 2.0</small>
     </h1>
@@ -216,7 +211,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="subtabbdy">
             </tbody>
         </table>
     </div>
@@ -227,5 +222,4 @@
         $('button[data-toggle="tooltip"]').tooltip({ html: true });</script>
 
 </body>
-
 </html>
