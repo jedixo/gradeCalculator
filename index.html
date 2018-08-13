@@ -257,7 +257,9 @@
         }
 
         function checkValid(element) {
-            if (element.value > 100) {
+            if (element.value == 101) {
+            element.value = 100;
+            } else if (element.value > 100) {
                 element.value = parseInt(element.value / 10).toFixed(0);
             } else if (element.value < 0) {
                 element.value = 0;
