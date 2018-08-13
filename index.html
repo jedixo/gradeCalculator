@@ -25,9 +25,10 @@
             gradeData.push(document.getElementById("neededHD"));
             gradeData.push(document.getElementById("totEarned"));
             gradeData.push(document.getElementById("avgMark"));
+            gradeData.push(document.getElementById("neededP"));
             //sets initital values for outputs
             for (var i = 0; i < gradeData.length; i++) {
-                gradeData[i].innerHTML = "0";
+                gradeData[i].innerHTML = "0%";
                 outputs.push(0);
             }
             //final exam worth if needed
@@ -60,12 +61,12 @@
             var inpdivworth = document.createElement("div");
             inpdivworth.setAttribute("class", "input-group");
             var inpdivworthprep = document.createElement("div");
-            inpdivworthprep.setAttribute("class", "input-group-prepend");
+            inpdivworthprep.setAttribute("class", "input-group-append");
             var inpdivworthprepspan = document.createElement("span");
             inpdivworthprepspan.setAttribute("class", "input-group-text");
             inpdivworthprepspan.innerHTML = "%";
             inpdivworthprep.appendChild(inpdivworthprepspan);
-            inpdivworth.appendChild(inpdivworthprep);
+            
             var ipworth = document.createElement("input");
             ipworth.setAttribute("type", "number");
             ipworth.setAttribute("class", "form-control");
@@ -74,6 +75,7 @@
             ipworth.setAttribute("placeholder", "100");
             io.push(ipworth);
             inpdivworth.appendChild(ipworth)
+            inpdivworth.appendChild(inpdivworthprep);
             tdworth.appendChild(inpdivworth);
             tr.appendChild(tdworth);
 
@@ -82,7 +84,7 @@
             var inpdivrec = document.createElement("div");
             inpdivrec.setAttribute("class", "input-group");
             var inpdivrecprep = document.createElement("div");
-            inpdivrecprep.setAttribute("class", "input-group-prepend");
+            inpdivrecprep.setAttribute("class", "input-group-append");
             var inpdivrecprepspan = document.createElement("span");
             inpdivrecprepspan.setAttribute("class", "input-group-text");
             inpdivrecprepspan.innerHTML = "%";
@@ -95,7 +97,8 @@
             iprec.setAttribute("id", "recInput" + index);
             iprec.setAttribute("placeholder", "100");
             io.push(iprec);
-            inpdivrec.appendChild(iprec)
+            inpdivrec.appendChild(iprec);
+            inpdivrec.appendChild(inpdivrecprep);
             tdrec.appendChild(inpdivrec);
             tr.appendChild(tdrec);
 
@@ -104,21 +107,22 @@
             var inpdivear = document.createElement("div");
             inpdivear.setAttribute("class", "input-group");
             var inpdivearprep = document.createElement("div");
-            inpdivearprep.setAttribute("class", "input-group-prepend");
+            inpdivearprep.setAttribute("class", "input-group-append");
             var inpdivearprepspan = document.createElement("span");
             inpdivearprepspan.setAttribute("class", "input-group-text");
             inpdivearprepspan.innerHTML = "%";
             inpdivearprep.appendChild(inpdivearprepspan);
-            inpdivear.appendChild(inpdivearprep);
+            
             var ipear = document.createElement("input");
             ipear.setAttribute("type", "number");
             ipear.setAttribute("class", "form-control");
             ipear.setAttribute("aria-describedby", "basic-adon1");
-            ipear.setAttribute("id", "recInput" + index);
+            ipear.setAttribute("id", "earInput" + index);
             ipear.setAttribute("value", "0");
             ipear.setAttribute("disabled", "true");
             io.push(ipear);
             inpdivear.appendChild(ipear)
+            inpdivear.appendChild(inpdivearprep);
             tdear.appendChild(inpdivear);
             tr.appendChild(tdear);
 
@@ -160,6 +164,92 @@
                 }
             }
         }
+
+        function update() {
+            var count = 0;
+            var totalWorth = 0;
+            var rreceived = 0;
+            var totalEarned = 0;
+            var avgReceived = 0;
+            var finalWeight = 1;
+
+            for (x = 0; x < data.length; x++) {
+                var worth = data[x][0].value / 100;
+                var received = data[x][1].value / 100;
+                var earned = worth * received;
+                data[x][2].value = earned * 100;
+                data[x][4] = earned;
+
+                totalWorth += worth;
+                finalWeight -= worth;
+                rreceived += received;
+                totalEarned += earned;
+                count++;
+            }
+
+            avgReceived = rreceived / count;
+            outputs[4] = avgReceived * 100;
+            outputs[3] = totalEarned * 100;
+            outputs[6] = finalWeight * 100;
+            cacluate();
+        }
+
+        function cacluate() {
+            var mark = outputs[3];
+            var finwei = outputs[6];
+            var p = 0;
+            var c = 0;
+            var d = 0;
+            var hd = 0;
+            var tmp = 0;
+            var tmp2 = 0;
+            while (tmp2 < 85) {
+                while (tmp2 < 75) {
+                    while (tmp2 < 65) {
+                        while (tmp2 < 50) {
+                            tmp++;
+                            var earned;
+                            earned = tmp * finwei / 100;
+                            tmp2 = mark + earned;
+                            p = tmp;
+                        }
+                        tmp++;
+                        var earned;
+                        earned = tmp * finwei / 100;
+                        tmp2 = mark + earned;
+                        c = tmp;
+                    }
+                    tmp++;
+                    var earned;
+                    earned = tmp * finwei / 100;
+                    tmp2 = mark + earned;
+                    d = tmp;
+                }
+                tmp++;
+                var earned;
+                earned = tmp * finwei / 100;
+                tmp2 = mark + earned;
+                hd = tmp;
+            }
+
+
+            outputs[0] = c;
+            outputs[1] = d;
+            outputs[2] = hd;
+            outputs[5] = p;
+
+            updateUi();
+        }
+
+        function updateUi() {
+            gradeData[0].innerHTML = outputs[0] + "%";
+            gradeData[1].innerHTML = outputs[1] + "%";
+            gradeData[2].innerHTML = outputs[2] + "%";
+            gradeData[3].innerHTML = outputs[3] + "%";
+            gradeData[4].innerHTML = outputs[4] + "%";
+            gradeData[5].innerHTML = outputs[5] + "%";
+        }
+
     </SCRIPT>
 </head>
 
@@ -180,6 +270,8 @@
                         style='color:lightgreen;'>Needed for D</th>
                     <th class="text-center" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Grade needed for A Credit</td></tr></table>"
                         style='color:lightgoldenrodyellow;'>Needed for C</th>
+                    <th class="text-center" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Grade needed for A Pass</td></tr></table>"
+                        style='color:lightcoral;'>Needed for P</th>
                 </tr>
             </thead>
             <tbody>
@@ -189,6 +281,7 @@
                     <td class="text-center" id="neededHD">0</td>
                     <td class="text-center" id="neededD">0</td>
                     <td class="text-center" id="neededC">0</td>
+                    <td class="text-center" id="neededP">0</td>
                 </tr>
             </tbody>
         </table>
@@ -202,7 +295,7 @@
 
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Optional</td></tr></table>">Subject Name</th>
+                    <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Optional</td></tr></table>">Assessment Name</th>
                     <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Percentage of the subjects overall weight</td></tr></table>">Overall Weight</th>
                     <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Grade for individual assesment piece</td></tr></table>">Mark Received</th>
                     <th class="text-center align-middle" scope="col" data-toggle="tooltip" title="<table ><tr><td class='text-center' style='color:White;'>Percentage of overall subject grade</td></tr></table>">Overall Grade</th>
@@ -215,11 +308,12 @@
             </tbody>
         </table>
     </div>
-    <button type="button" class="btn btn-primary btn-lg btn-block mx-auto" style="width: 95%">Calculate</button>
+    <button type="button" class="btn btn-primary btn-lg btn-block mx-auto" style="width: 95%" onclick="update();">Calculate</button>
     <script>
         init(); addNew();
         $('th[data-toggle="tooltip"]').tooltip({ html: true });
         $('button[data-toggle="tooltip"]').tooltip({ html: true });</script>
 
 </body>
+
 </html>
