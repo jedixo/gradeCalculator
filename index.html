@@ -16,6 +16,9 @@
         var gradeData = [];
         var outputs = [];
         var data = [];
+        var progbarcol = ["progress-bar progress-bar-striped", "progress-bar progress-bar-striped bg-success",
+            "progress-bar progress-bar-striped bg-info", "progress-bar progress-bar-striped bg-warning",
+            "progress-bar progress-bar-striped bg-danger"];
 
         //initialises data needed for calculations
         function init() {
@@ -179,12 +182,29 @@
             var avgReceived = 0;
             var finalWeight = 1;
 
+                            var pb = document.getElementById("progbar");
+                pb.innerHTML = "";
+
             for (x = 0; x < data.length; x++) {
                 var worth = data[x][0].value / 100;
                 var received = data[x][1].value / 100;
                 var earned = worth * received;
-                data[x][2].value = earned * 100;
+                data[x][2].value = parseFloat(earned * 100).toFixed(2);
                 data[x][4] = earned;
+
+
+
+                var suc = document.createElement("div");
+                suc.setAttribute("class", progbarcol[x%5]);
+                suc.setAttribute("role", "progressbar");
+                suc.setAttribute("style", "width: " + data[x][4] * 100 + "%");
+                suc.setAttribute("aria-valuenow", "" + data[x][4] * 100);
+                suc.setAttribute('aria-valuemin', "0");
+                suc.setAttribute("aria-valuemax", "100");
+                suc.innerHTML = "%" + parseFloat(data[x][4] * 100).toFixed(2)
+                pb.appendChild(suc);
+
+
 
                 totalWorth += worth;
                 finalWeight -= worth;
@@ -251,26 +271,16 @@
             gradeData[0].innerHTML = outputs[0] + "%";
             gradeData[1].innerHTML = outputs[1] + "%";
             gradeData[2].innerHTML = outputs[2] + "%";
-            gradeData[3].innerHTML = outputs[3] + "%";
-            gradeData[4].innerHTML = outputs[4] + "%";
+            gradeData[3].innerHTML = parseFloat(outputs[3]).toFixed(2) + "%";
+            gradeData[4].innerHTML = parseFloat(outputs[4]).toFixed(2) + "%";
             gradeData[5].innerHTML = outputs[5] + "%";
-            
-            var pb=document.getElementById("progbar");
-            pb.innerHTML = "";
-            var suc = document.createElement("div");
-            suc.setAttribute("class","progress-bar progress-bar-striped");
-            suc.setAttribute("role","progressbar");
-            suc.setAttribute("style","width: " + outputs[3] +"%");
-            suc.setAttribute("aria-valuenow",""+ outputs[3]);
-            suc.setAttribute('aria-valuemin',"0");
-            suc.setAttribute("aria-valuemax","100");
-            pb.appendChild(suc);
+
 
         }
 
         function checkValid(element) {
             if (element.value == 101) {
-            element.value = 100;
+                element.value = 100;
             } else if (element.value > 100) {
                 element.value = parseInt(element.value / 10).toFixed(0);
             } else if (element.value < 0) {
@@ -315,8 +325,8 @@
         </table>
     </div>
     <div id="progbar" class="progress mx-auto mb-2" style="width: 95%; ">
-        
-       
+
+
     </div>
     <div style="padding-bottom: .8%"></div>
     <div class="table-responsive mx-auto" style="width: 95%;">
