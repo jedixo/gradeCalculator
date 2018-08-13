@@ -13,7 +13,6 @@
 
     <SCRIPT language="javascript">
         var index = 0;
-        var reference = 0;
         var gradeData = [];
         var outputs = [];
         var data = [];
@@ -130,7 +129,7 @@
             tddelbut.setAttribute("type", "button");
             tddelbut.setAttribute("class", "btn btn-danger");
             tddelbut.setAttribute("disabled", "true");
-            tddelbut.setAttribute("onclick", "removeRow(" + index + ");");
+            tddelbut.setAttribute("onclick", "removeRow(" + data.length + ");");
             tddelbut.innerHTML = "&#x268A";
             io.push(tddelbut);
             tddel.appendChild(tddelbut);
@@ -139,25 +138,26 @@
             var foo = document.getElementById("subjectTable");
             foo.appendChild(tr);
             io.push(0);
+            io.push(index);
             data.push(io);
+            //data.push(index);
 
-            if (reference > 0) {
+            if (data.length > 1) {
                 for (var i = 0; i < data.length; i++) {
-                    data[i][data[i].length - 2].disabled = false;
+                    data[i][data[i].length - 3].disabled = false;
                 }
             }
-
             index++;
-            reference++;
         }
 
         function removeRow(row) {
-            document.getElementById("sub" + row).outerHTML = "";
-            reference--;
+            document.getElementById("sub" + data[row][data[row].length - 1]).outerHTML = "";
+            data.splice(row, 1);
 
-            if (reference === 1) {
-                for (var i = 0; i < data.length; i++) {
-                    data[i][data[i].length - 2].disabled = true;
+            for (var i = 0; i < data.length; i++) {
+                data[i][data[i].length - 3].setAttribute("onclick", "removeRow(" + i + ");");
+                if (data.length === 1) {
+                    data[i][data[i].length - 3].disabled = true;
                 }
             }
         }
