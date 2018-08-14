@@ -182,8 +182,8 @@
             var avgReceived = 0;
             var finalWeight = 1;
 
-                            var pb = document.getElementById("progbar");
-                pb.innerHTML = "";
+            var pb = document.getElementById("progbar");
+            pb.innerHTML = "";
 
             for (x = 0; x < data.length; x++) {
                 var worth = data[x][0].value / 100;
@@ -195,7 +195,7 @@
 
 
                 var suc = document.createElement("div");
-                suc.setAttribute("class", progbarcol[x%5]);
+                suc.setAttribute("class", progbarcol[x % 5]);
                 suc.setAttribute("role", "progressbar");
                 suc.setAttribute("style", "width: " + data[x][4] * 100 + "%");
                 suc.setAttribute("aria-valuenow", "" + data[x][4] * 100);
@@ -269,7 +269,7 @@
                     }
                 }
             }
-            
+
 
             outputs[0] = c;
             outputs[1] = d;
