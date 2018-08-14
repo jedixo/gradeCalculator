@@ -22,19 +22,19 @@
 
         //initialises data needed for calculations
         function init() {
-            //grabs output elements
+            //grabs output elements from top table of document
             gradeData.push(document.getElementById("neededC"));
             gradeData.push(document.getElementById("neededD"));
             gradeData.push(document.getElementById("neededHD"));
             gradeData.push(document.getElementById("totEarned"));
             gradeData.push(document.getElementById("avgMark"));
             gradeData.push(document.getElementById("neededP"));
-            //sets initital values for outputs
+            //sets initital values for outputs to 0%
             for (var i = 0; i < gradeData.length; i++) {
                 gradeData[i].innerHTML = "0%";
                 outputs.push(0);
             }
-            //final exam worth if needed
+            //final exam variable if needed
             outputs.push(0);
         };
 
@@ -42,9 +42,11 @@
         function addNew() {
             var io = []
 
+            //new table row for subject
             var tr = document.createElement("tr");
             tr.setAttribute("id", "sub" + index);
 
+            //name column for subject
             var tdname = document.createElement("td");
             tdname.setAttribute("id", "name" + index);
             var inpdiv = document.createElement("div");
@@ -59,6 +61,7 @@
             tdname.appendChild(inpdiv);
             tr.appendChild(tdname);
 
+            //weight column
             var tdworth = document.createElement("td");
             tdworth.setAttribute("id", "worth" + index);
             var inpdivworth = document.createElement("div");
@@ -69,7 +72,6 @@
             inpdivworthprepspan.setAttribute("class", "input-group-text");
             inpdivworthprepspan.innerHTML = "%";
             inpdivworthprep.appendChild(inpdivworthprepspan);
-
             var ipworth = document.createElement("input");
             ipworth.setAttribute("type", "number");
             ipworth.setAttribute("class", "form-control");
@@ -85,6 +87,7 @@
                 checkValid(ipworth);
             });
 
+            //received column
             var tdrec = document.createElement("td");
             tdrec.setAttribute("id", "rec" + index);
             var inpdivrec = document.createElement("div");
@@ -111,6 +114,7 @@
                 checkValid(iprec);
             });
 
+            //overal grade column
             var tdear = document.createElement("td");
             tdear.setAttribute("id", "ear" + index);
             var inpdivear = document.createElement("div");
@@ -121,7 +125,6 @@
             inpdivearprepspan.setAttribute("class", "input-group-text");
             inpdivearprepspan.innerHTML = "%";
             inpdivearprep.appendChild(inpdivearprepspan);
-
             var ipear = document.createElement("input");
             ipear.setAttribute("type", "number");
             ipear.setAttribute("class", "form-control");
@@ -135,6 +138,7 @@
             tdear.appendChild(inpdivear);
             tr.appendChild(tdear);
 
+            //delete button for column
             var tddel = document.createElement("td");
             tddel.setAttribute("id", "del" + index);
             tddel.setAttribute("class", "text-right");
@@ -148,12 +152,14 @@
             tddel.appendChild(tddelbut);
             tr.appendChild(tddel);
 
+            //gets subjet table and appends row and stores working data
             var foo = document.getElementById("subtabbdy");
             foo.appendChild(tr);
             io.push(0);
             io.push(index);
             data.push(io);
 
+            //enables delete button if rows > 1
             if (data.length > 1) {
                 for (var i = 0; i < data.length; i++) {
                     data[i][data[i].length - 3].disabled = false;
@@ -162,10 +168,14 @@
             index++;
         }
 
+        //removes individual rows from table
         function removeRow(row) {
+            //removes html element and removes working data
             document.getElementById("sub" + data[row][data[row].length - 1]).outerHTML = "";
             data.splice(row, 1);
 
+            //resets remaining delete buttons to reference correct rows and disables button if
+            //only one row remains
             for (var i = 0; i < data.length; i++) {
                 data[i][data[i].length - 3].setAttribute("onclick", "removeRow(" + i + ");");
                 if (data.length === 1) {
@@ -174,6 +184,7 @@
             }
         }
 
+        // update function
         function update() {
             var count = 0;
             var totalWorth = 0;
@@ -182,9 +193,11 @@
             var avgReceived = 0;
             var finalWeight = 1;
 
+            //removes previous progress bar
             var pb = document.getElementById("progbar");
             pb.innerHTML = "";
 
+            // calculates overall grade and updates progress bar
             for (x = 0; x < data.length; x++) {
                 var worth = data[x][0].value / 100;
                 var received = data[x][1].value / 100;
@@ -192,8 +205,7 @@
                 data[x][2].value = parseFloat(earned * 100).toFixed(2);
                 data[x][4] = earned;
 
-
-
+                //sets up progress bar
                 var suc = document.createElement("div");
                 suc.setAttribute("class", progbarcol[x % 5]);
                 suc.setAttribute("role", "progressbar");
@@ -203,8 +215,6 @@
                 suc.setAttribute("aria-valuemax", "100");
                 suc.innerHTML = "%" + parseFloat(data[x][4] * 100).toFixed(2)
                 pb.appendChild(suc);
-
-
 
                 totalWorth += worth;
                 finalWeight -= worth;
@@ -219,7 +229,8 @@
             outputs[6] = finalWeight * 100;
             cacluate();
         }
-
+        
+        //calculate function for top table
         function cacluate() {
             var mark = outputs[3];
             var finwei = outputs[6];
@@ -270,7 +281,6 @@
                 }
             }
 
-
             outputs[0] = c;
             outputs[1] = d;
             outputs[2] = hd;
@@ -279,6 +289,7 @@
             updateUi();
         }
 
+        // updates top row data in html
         function updateUi() {
             gradeData[0].innerHTML = outputs[0] + "%";
             gradeData[1].innerHTML = outputs[1] + "%";
@@ -290,6 +301,7 @@
 
         }
 
+        //input checking to make sure invalid inputs are filtered
         function checkValid(element) {
             if (element.value == 101) {
                 element.value = 100;
@@ -361,7 +373,10 @@
     </div>
     <button type="button" class="btn btn-primary btn-lg btn-block mx-auto" style="width: 95%" onclick="update();">Calculate</button>
     <script>
+        //initiates everything
         init(); addNew();
+
+        //enables tooltips
         $('th[data-toggle="tooltip"]').tooltip({ html: true });
         $('button[data-toggle="tooltip"]').tooltip({ html: true });</script>
 
