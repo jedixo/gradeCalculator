@@ -257,7 +257,19 @@
                 tmp2 = mark + earned;
                 hd = tmp;
             }
-
+            if (mark > 50) {
+                p = 0;
+                if (mark > 65) {
+                    c = 0;
+                    if (mark > 75) {
+                        d = 0;
+                        if (mark > 85) {
+                            hd = 0;
+                        }
+                    }
+                }
+            }
+            
 
             outputs[0] = c;
             outputs[1] = d;
