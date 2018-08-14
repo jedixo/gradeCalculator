@@ -224,7 +224,7 @@
                 suc.setAttribute("aria-valuenow", "" + data[x][4] * 100);
                 suc.setAttribute('aria-valuemin', "0");
                 suc.setAttribute("aria-valuemax", "100");
-                suc.innerHTML = "%" + parseFloat(data[x][4] * 100).toFixed(2)
+                suc.innerHTML = parseFloat(data[x][4] * 100).toFixed(2) + "%";
                 
                 progressBar.appendChild(suc);
 
