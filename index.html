@@ -40,124 +40,133 @@
 
         //adds a new subject table
         function addNew() {
-            var io = []
-
-            //new table row for subject
-            var tr = document.createElement("tr");
-            tr.setAttribute("id", "sub" + index);
+            //new table and row for subject
+            var workingData = []
+            var assessmentTable = document.getElementById("subtabbdy");
+            var assessmentRow = document.createElement("tr");
+            
+            assessmentRow.setAttribute("id", "sub" + index);
 
             //name column for subject
-            var tdname = document.createElement("td");
-            tdname.setAttribute("id", "name" + index);
-            var inpdiv = document.createElement("div");
-            inpdiv.setAttribute("class", "input-group");
-            var inpname = document.createElement("input");
-            inpname.setAttribute("type", "text");
-            inpname.setAttribute("id", "nameInput" + index);
-            inpname.setAttribute("class", "form-control");
-            inpname.setAttribute("placeholder", "Assessment Name");
-            inpname.setAttribute("aria-describedby", "basic-adon1");
-            inpdiv.appendChild(inpname)
-            tdname.appendChild(inpdiv);
-            tr.appendChild(tdname);
+            var nameColumn = document.createElement("td");
+            var nameColumDiv = document.createElement("div");
+            var nameInput = document.createElement("input");
+            
+            nameColumn.setAttribute("id", "name" + index);
+            nameColumDiv.setAttribute("class", "input-group");
+            nameInput.setAttribute("type", "text");
+            nameInput.setAttribute("id", "nameInput" + index);
+            nameInput.setAttribute("class", "form-control");
+            nameInput.setAttribute("placeholder", "Assessment Name");
+            nameInput.setAttribute("aria-describedby", "basic-adon1");
+            
+            nameColumDiv.appendChild(nameInput)
+            nameColumn.appendChild(nameColumDiv);
+            assessmentRow.appendChild(nameColumn);
 
             //weight column
-            var tdworth = document.createElement("td");
-            tdworth.setAttribute("id", "worth" + index);
-            var inpdivworth = document.createElement("div");
-            inpdivworth.setAttribute("class", "input-group");
-            var inpdivworthprep = document.createElement("div");
-            inpdivworthprep.setAttribute("class", "input-group-append");
-            var inpdivworthprepspan = document.createElement("span");
-            inpdivworthprepspan.setAttribute("class", "input-group-text");
-            inpdivworthprepspan.innerHTML = "%";
-            inpdivworthprep.appendChild(inpdivworthprepspan);
-            var ipworth = document.createElement("input");
-            ipworth.setAttribute("type", "number");
-            ipworth.setAttribute("class", "form-control");
-            ipworth.setAttribute("aria-describedby", "basic-adon1");
-            ipworth.setAttribute("id", "worthInput" + index);
-            ipworth.setAttribute("placeholder", "100");
-            io.push(ipworth);
-            inpdivworth.appendChild(ipworth)
-            inpdivworth.appendChild(inpdivworthprep);
-            tdworth.appendChild(inpdivworth);
-            tr.appendChild(tdworth);
-            ipworth.addEventListener('input', function () {
-                checkValid(ipworth);
+            var weightColumn = document.createElement("td");
+            var weightColumnDiv = document.createElement("div");
+            var weightInputAppendDiv = document.createElement("div");
+            var weightInputAppend = document.createElement("span");
+            var weightInput = document.createElement("input");
+            
+            weightColumn.setAttribute("id", "worth" + index);
+            weightColumnDiv.setAttribute("class", "input-group");
+            weightInputAppendDiv.setAttribute("class", "input-group-append");
+            weightInputAppend.setAttribute("class", "input-group-text");
+            weightInputAppend.innerHTML = "%";
+            weightInput.setAttribute("type", "number");
+            weightInput.setAttribute("class", "form-control");
+            weightInput.setAttribute("aria-describedby", "basic-adon1");
+            weightInput.setAttribute("id", "worthInput" + index);
+            weightInput.setAttribute("placeholder", "100");
+            weightInput.addEventListener('input', function () {
+                checkValid(weightInput);
             });
+
+            workingData.push(weightInput);
+            weightInputAppendDiv.appendChild(weightInputAppend);
+            weightColumnDiv.appendChild(weightInput)
+            weightColumnDiv.appendChild(weightInputAppendDiv);
+            weightColumn.appendChild(weightColumnDiv);
+            assessmentRow.appendChild(weightColumn);
 
             //received column
-            var tdrec = document.createElement("td");
-            tdrec.setAttribute("id", "rec" + index);
-            var inpdivrec = document.createElement("div");
-            inpdivrec.setAttribute("class", "input-group");
-            var inpdivrecprep = document.createElement("div");
-            inpdivrecprep.setAttribute("class", "input-group-append");
-            var inpdivrecprepspan = document.createElement("span");
-            inpdivrecprepspan.setAttribute("class", "input-group-text");
-            inpdivrecprepspan.innerHTML = "%";
-            inpdivrecprep.appendChild(inpdivrecprepspan);
-            inpdivrec.appendChild(inpdivrecprep);
-            var iprec = document.createElement("input");
-            iprec.setAttribute("type", "number");
-            iprec.setAttribute("class", "form-control");
-            iprec.setAttribute("aria-describedby", "basic-adon1");
-            iprec.setAttribute("id", "recInput" + index);
-            iprec.setAttribute("placeholder", "100");
-            io.push(iprec);
-            inpdivrec.appendChild(iprec);
-            inpdivrec.appendChild(inpdivrecprep);
-            tdrec.appendChild(inpdivrec);
-            tr.appendChild(tdrec);
-            iprec.addEventListener('input', function () {
-                checkValid(iprec);
+            var receivedColumn = document.createElement("td");
+            var receivedColumnDiv = document.createElement("div");
+            var reveivedInputAppendDiv = document.createElement("div");
+            var receivedInputAppend = document.createElement("span");
+            var receivedInput = document.createElement("input");
+            
+            receivedColumn.setAttribute("id", "rec" + index);
+            receivedColumnDiv.setAttribute("class", "input-group");
+            reveivedInputAppendDiv.setAttribute("class", "input-group-append");
+            receivedInputAppend.setAttribute("class", "input-group-text");
+            receivedInputAppend.innerHTML = "%";
+            receivedInput.setAttribute("type", "number");
+            receivedInput.setAttribute("class", "form-control");
+            receivedInput.setAttribute("aria-describedby", "basic-adon1");
+            receivedInput.setAttribute("id", "recInput" + index);
+            receivedInput.setAttribute("placeholder", "100");
+            receivedInput.addEventListener('input', function () {
+                checkValid(receivedInput);
             });
+            
+            workingData.push(receivedInput);
+            reveivedInputAppendDiv.appendChild(receivedInputAppend);
+            receivedColumnDiv.appendChild(receivedInput);
+            receivedColumnDiv.appendChild(reveivedInputAppendDiv);
+            receivedColumn.appendChild(receivedColumnDiv);
+            assessmentRow.appendChild(receivedColumn);
 
-            //overal grade column
-            var tdear = document.createElement("td");
-            tdear.setAttribute("id", "ear" + index);
-            var inpdivear = document.createElement("div");
-            inpdivear.setAttribute("class", "input-group");
-            var inpdivearprep = document.createElement("div");
-            inpdivearprep.setAttribute("class", "input-group-append");
-            var inpdivearprepspan = document.createElement("span");
-            inpdivearprepspan.setAttribute("class", "input-group-text");
-            inpdivearprepspan.innerHTML = "%";
-            inpdivearprep.appendChild(inpdivearprepspan);
-            var ipear = document.createElement("input");
-            ipear.setAttribute("type", "number");
-            ipear.setAttribute("class", "form-control");
-            ipear.setAttribute("aria-describedby", "basic-adon1");
-            ipear.setAttribute("id", "earInput" + index);
-            ipear.setAttribute("value", "0");
-            ipear.setAttribute("disabled", "true");
-            io.push(ipear);
-            inpdivear.appendChild(ipear)
-            inpdivear.appendChild(inpdivearprep);
-            tdear.appendChild(inpdivear);
-            tr.appendChild(tdear);
+            //overall grade column
+            var overallColumn = document.createElement("td");
+            var overallColumnDiv = document.createElement("div");
+            var overallColumnAppendDiv = document.createElement("div");
+            var overallColumnAppend = document.createElement("span");
+            var overallOutput = document.createElement("input");
+            
+            overallColumn.setAttribute("id", "ear" + index);
+            overallColumnDiv.setAttribute("class", "input-group");
+            overallColumnAppendDiv.setAttribute("class", "input-group-append");
+            overallColumnAppend.setAttribute("class", "input-group-text");
+            overallColumnAppend.innerHTML = "%";
+            overallOutput.setAttribute("type", "number");
+            overallOutput.setAttribute("class", "form-control");
+            overallOutput.setAttribute("aria-describedby", "basic-adon1");
+            overallOutput.setAttribute("id", "earInput" + index);
+            overallOutput.setAttribute("value", "0");
+            overallOutput.setAttribute("disabled", "true");
+            
+            workingData.push(overallOutput);
+            overallColumnAppendDiv.appendChild(overallColumnAppend);
+            overallColumnDiv.appendChild(overallOutput)
+            overallColumnDiv.appendChild(overallColumnAppendDiv);
+            overallColumn.appendChild(overallColumnDiv);
+            assessmentRow.appendChild(overallColumn);
 
             //delete button for column
-            var tddel = document.createElement("td");
-            tddel.setAttribute("id", "del" + index);
-            tddel.setAttribute("class", "text-right");
-            var tddelbut = document.createElement("button");
-            tddelbut.setAttribute("type", "button");
-            tddelbut.setAttribute("class", "btn btn-danger");
-            tddelbut.setAttribute("disabled", "true");
-            tddelbut.setAttribute("onclick", "removeRow(" + data.length + ");");
-            tddelbut.innerHTML = "&#x268A";
-            io.push(tddelbut);
-            tddel.appendChild(tddelbut);
-            tr.appendChild(tddel);
+            var deleteButtonColumn = document.createElement("td");
+            var deleteButton = document.createElement("button");
+            
+            deleteButtonColumn.setAttribute("id", "del" + index);
+            deleteButtonColumn.setAttribute("class", "text-right");
+            deleteButton.setAttribute("type", "button");
+            deleteButton.setAttribute("class", "btn btn-danger");
+            deleteButton.setAttribute("disabled", "true");
+            deleteButton.setAttribute("onclick", "removeRow(" + data.length + ");");
+            deleteButton.innerHTML = "&#x268A";
+            
+            workingData.push(deleteButton);
+            deleteButtonColumn.appendChild(deleteButton);
+            assessmentRow.appendChild(deleteButtonColumn);
 
-            //gets subjet table and appends row and stores working data
-            var foo = document.getElementById("subtabbdy");
-            foo.appendChild(tr);
-            io.push(0);
-            io.push(index);
-            data.push(io);
+            //appends row and stores working data
+            assessmentTable.appendChild(assessmentRow);
+            workingData.push(0);
+            workingData.push(index);
+            data.push(workingData);
 
             //enables delete button if rows > 1
             if (data.length > 1) {
@@ -186,27 +195,29 @@
 
         // update function
         function update() {
-            var count = 0;
-            var totalWorth = 0;
-            var rreceived = 0;
-            var totalEarned = 0;
-            var avgReceived = 0;
-            var finalWeight = 1;
+            var assessmentCount = 0;
+            var totalAssessmentWeight = 0;
+            var totalMarkReceived = 0;
+            var totalMarkEarned = 0;
+            var averageMarkReceived = 0;
+            var finalExamweight = 1;
 
             //removes previous progress bar
-            var pb = document.getElementById("progbar");
-            pb.innerHTML = "";
+            var progressBar = document.getElementById("progbar");
+            progressBar.innerHTML = "";
 
             // calculates overall grade and updates progress bar
             for (x = 0; x < data.length; x++) {
-                var worth = data[x][0].value / 100;
-                var received = data[x][1].value / 100;
-                var earned = worth * received;
-                data[x][2].value = parseFloat(earned * 100).toFixed(2);
-                data[x][4] = earned;
+                var assessmentWeight = data[x][0].value / 100;
+                var markReceived = data[x][1].value / 100;
+                var markEarned = assessmentWeight * markReceived;
+                
+                data[x][2].value = parseFloat(markEarned * 100).toFixed(2);
+                data[x][4] = markEarned;
 
                 //sets up progress bar
                 var suc = document.createElement("div");
+                
                 suc.setAttribute("class", progbarcol[x % 5]);
                 suc.setAttribute("role", "progressbar");
                 suc.setAttribute("style", "width: " + data[x][4] * 100 + "%");
@@ -214,77 +225,79 @@
                 suc.setAttribute('aria-valuemin', "0");
                 suc.setAttribute("aria-valuemax", "100");
                 suc.innerHTML = "%" + parseFloat(data[x][4] * 100).toFixed(2)
-                pb.appendChild(suc);
+                
+                progressBar.appendChild(suc);
 
-                totalWorth += worth;
-                finalWeight -= worth;
-                rreceived += received;
-                totalEarned += earned;
-                count++;
+                totalAssessmentWeight += assessmentWeight;
+                finalExamweight -= assessmentWeight;
+                totalMarkReceived += markReceived;
+                totalMarkEarned += markEarned;
+                assessmentCount++;
             }
 
-            avgReceived = rreceived / count;
-            outputs[4] = avgReceived * 100;
-            outputs[3] = totalEarned * 100;
-            outputs[6] = finalWeight * 100;
+            averageMarkReceived = totalMarkReceived / assessmentCount;
+            outputs[4] = averageMarkReceived * 100;
+            outputs[3] = totalMarkEarned * 100;
+            outputs[6] = finalExamweight * 100;
             cacluate();
         }
         
         //calculate function for top table
         function cacluate() {
-            var mark = outputs[3];
-            var finwei = outputs[6];
-            var p = 0;
-            var c = 0;
-            var d = 0;
-            var hd = 0;
-            var tmp = 0;
-            var tmp2 = 0;
-            while (tmp2 < 85) {
-                while (tmp2 < 75) {
-                    while (tmp2 < 65) {
-                        while (tmp2 < 50) {
-                            tmp++;
+            var totalGrade = outputs[3];
+            var finalExamWeight = outputs[6];
+            var passMark = 0;
+            var creditMark = 0;
+            var distinctionMark = 0;
+            var HighDistinctionMark = 0;
+            var workingValue1 = 0;
+            var workingValue2 = 0;
+            
+            while (workingValue2 < 85) {
+                while (workingValue2 < 75) {
+                    while (workingValue2 < 65) {
+                        while (workingValue2 < 50) {
+                            workingValue1++;
                             var earned;
-                            earned = tmp * finwei / 100;
-                            tmp2 = mark + earned;
-                            p = tmp;
+                            earned = workingValue1 * finalExamWeight / 100;
+                            workingValue2 = totalGrade + earned;
+                            passMark = workingValue1;
                         }
-                        tmp++;
+                        workingValue1++;
                         var earned;
-                        earned = tmp * finwei / 100;
-                        tmp2 = mark + earned;
-                        c = tmp;
+                        earned = workingValue1 * finalExamWeight / 100;
+                        workingValue2 = totalGrade + earned;
+                        creditMark = workingValue1;
                     }
-                    tmp++;
+                    workingValue1++;
                     var earned;
-                    earned = tmp * finwei / 100;
-                    tmp2 = mark + earned;
-                    d = tmp;
+                    earned = workingValue1 * finalExamWeight / 100;
+                    workingValue2 = totalGrade + earned;
+                    distinctionMark = workingValue1;
                 }
-                tmp++;
+                workingValue1++;
                 var earned;
-                earned = tmp * finwei / 100;
-                tmp2 = mark + earned;
-                hd = tmp;
+                earned = workingValue1 * finalExamWeight / 100;
+                workingValue2 = totalGrade + earned;
+                HighDistinctionMark = workingValue1;
             }
-            if (mark > 50) {
-                p = 0;
-                if (mark > 65) {
-                    c = 0;
-                    if (mark > 75) {
-                        d = 0;
-                        if (mark > 85) {
-                            hd = 0;
+            if (totalGrade >= 50) {
+                passMark = 0;
+                if (totalGrade >= 65) {
+                    creditMark = 0;
+                    if (totalGrade >= 75) {
+                        distinctionMark = 0;
+                        if (totalGrade >= 85) {
+                            HighDistinctionMark = 0;
                         }
                     }
                 }
             }
 
-            outputs[0] = c;
-            outputs[1] = d;
-            outputs[2] = hd;
-            outputs[5] = p;
+            outputs[0] = creditMark;
+            outputs[1] = distinctionMark;
+            outputs[2] = HighDistinctionMark;
+            outputs[5] = passMark;
 
             updateUi();
         }
